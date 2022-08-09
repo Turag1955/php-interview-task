@@ -10,7 +10,7 @@
             @include('layouts.components.sidebar')
 
             <!-- Main Content -->
-            <div class="main-content">
+            <div class="main-content" style="min-height: 480px">
                 @yield('main-content')
             </div>
             @include('layouts.components.footer')

@@ -1,12 +1,22 @@
 <div class="main-sidebar">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="{{ route('store.report') }}">{{ __('PHP INTERVIEW TASK') }}</a>
+            <a href="{{ route('/') }}">{{ __('PHP INTERVIEW TASK') }}</a>
         </div>
         <ul class="sidebar-menu">
             <li class="">
-                <a class="nav-link " href="{{ route('report') }}">
-                    <i class="far fa-user"></i> <span>{{ __('Report') }}</span>
+                <a class="nav-link " href="{{ route('/') }}">
+                    <i class="fas fa-chart-pie"></i> <span>{{ __('Store Report') }}</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="nav-link " href="{{ route('workspace.index') }}">
+                    <i class="fas fa-chart-pie"></i> <span>{{ __('Create Workspace') }}</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="nav-link " href="{{ route('trello.setting') }}">
+                    <i class="fas fa-cogs"></i> <span>{{ __('Trello Setting') }}</span>
                 </a>
             </li>
         </ul>

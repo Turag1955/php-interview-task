@@ -12,79 +12,65 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                        {{-- <div class="card-header">
-                            <a href="" class="btn btn-icon icon-left btn-primary"><i
-                                    class="fas fa-plus"></i> {{ __('Generate Report') }}</a>
-                        </div> --}}
                     <div class="card-body">
-                        {{-- <div class="table-responsive">
-                            <table class="table table-striped" id="maintable">
-                                <thead>
-                                    <tr>
-                                        <th>{{ __('levels.id') }}</th>
-                                        <th>{{ __('levels.name') }}</th>
-                                        <th>{{ __('levels.status') }}</th>
-                                        <th>{{ __('levels.actions') }}</th>
-                                    </tr>
-                                </thead>
-                            </table> --}}
-                            <a href="" class="btn btn-icon icon-left btn-primary"><i
-                                class="fas fa-plus"></i> {{ __('Generate Report') }}</a>
-                        </div>
+                        <form action="{{ route('store.report') }}" method="POST">
+                            @csrf
+                            <button type="submit"  href="" class="btn btn-icon icon-left btn-primary"><i class="fas fa-plus"></i>
+                                {{ __('Generate Report') }}</button>
+                        </form>
                     </div>
                 </div>
-                @if(isset($showView))
+            </div>
+            @if(!blank($reports))
+            <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>{{ __('attendance_report.attendance_report') }}</h5>
-                        <button class="btn btn-success btn-sm report-print-button" onclick="printDiv('printablediv')">{{ __('attendance_report.print') }}</button>
+                        <h5>{{ __('Report (Top Customers by product) ') }}</h5>
+                        
                     </div>
                     <div class="card-body" id="printablediv">
-                        @if(!blank($attendances))
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>{{ __('levels.id') }}</th>
-                                            <th>{{ __('levels.image') }}</th>
-                                            <th>{{ __('attendance_report.user') }}</th>
-                                            <th>{{ __('attendance_report.working') }}</th>
-                                            <th>{{ __('attendance_report.date') }}</th>
-                                            <th>{{ __('attendance_report.clock_in') }}</th>
-                                            <th>{{ __('attendance_report.clock_out') }}</th>
-                                        </tr>
-                                        @php $i =0;@endphp
-                                        @foreach($attendances as $attendance)
-                                            <tr>
-                                                <td>{{$i+=1 }}</td>
-                                                <td><figure class="avatar mr-2"><img src="{{$attendance->user->images}}" alt=""></figure></td>
-                                                <td>{{ Str::limit(optional($attendance->user)->name, 50)}}</td>
-                                                <td>{{ Str::limit($attendance->title, 30) }}</td>
-                                                <td>{{$attendance->date}}</td>
-                                                @if ($attendance->checkin_time)
-                                                    <td>{{$attendance->checkin_time}}</td>
-                                                @else
-                                                    <td>{{ __('attendance_report.n/a') }}</td>
-                                                @endif
-                                                @if ($attendance->checkout_time	)
-                                                    <td>{{$attendance->checkout_time}}</td>
-                                                @else
-                                                    <td>{{ __('attendance_report.n/a') }}</td>
-                                                @endif
-
-                                            </tr>
-                                        @endforeach
-                                    </thead>
-                                </table>
-                            </div>
-                        @else
-                            <h4 class="text-danger">{{ __('attendance_report.data_not_found') }}</h4>
-                        @endif
+                        <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th scope="col">{{ __('Product Name') }}</th>
+                                <th scope="col">{{ __('Customer Name') }}</th>
+                                <th scope="col">{{ __('Quantity') }}</th>
+                                <th scope="col">{{ __('Price') }}</th>
+                                <th scope="col">{{ __('Total') }}</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                     $purchase_quantity = 0;
+                                     $product_price = 0;
+                                @endphp
+                                @foreach ($reports as $report)
+                                <tr>
+                                    <th scope="row">{{ $report->product_name }}</th>
+                                    <td>{{ $report->name }}</td>
+                                    <td>{{ $report->purchase_quantity }}</td>
+                                    <td>${{ $report->product_price }}</td>
+                                    <td>${{ $report->purchase_quantity*$report->product_price }}</td>
+                                  </tr>
+                                  @php
+                                      $purchase_quantity = $report->purchase_quantity + $purchase_quantity;
+                                      $product_price = $report->product_price + $product_price;
+                                  @endphp
+                                @endforeach
+                              <tr>
+                                <td colspan="2" class="gross-total">{{ __('Gross Total:') }}</td>
+                                <td class="gross-total text-left">{{ $purchase_quantity }}</td>
+                                <td class="gross-total text-left">${{ $product_price }}</td>
+                                <td class="gross-total text-left">${{ $purchase_quantity * $product_price }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
                     </div>
                 </div>
-            @endif
             </div>
+            @endif
         </div>
+    </div>
     </div>
 </section>
 

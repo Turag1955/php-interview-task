@@ -6,18 +6,17 @@ use Illuminate\Support\Facades\Route;
 
 
 
+Route::get('/', 'StoreReportController@index')->name('/');
+Route::post('store-report', 'StoreReportController@store')->name('store.report');
 
+Route::group(['prefix' => 'trello', 'as' => 'trello.'], function () {
+    Route::get('/', 'SettingController@index')->name('setting');
+    Route::post('store', 'SettingController@trelloSettingUpdate')->name('store');
+});
 
-//Store Report 
-Route::get('store-report', 'StoreReportController@index')->name('store.report');
-// Route::get('get-category', 'CategoryController@getCategory')->name('category.get-category');
-
-
-Route::get('report', 'HomeController@index')->name('report');
-
-Route::group(['prefix' => 'setting', 'as' => 'setting.'], function () {
-    Route::get('sms', 'SettingController@smsSetting')->name('sms');
-    Route::post('sms', 'SettingController@smsSettingUpdate')->name('sms-update');
+Route::group(['prefix' => 'workspace', 'as' => 'workspace.'], function () {
+    Route::get('/', 'WorkspaceController@index')->name('index');
+    Route::post('store', 'WorkspaceController@store')->name('store');
 });
 
 
