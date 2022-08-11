@@ -4,26 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\StoreReport;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use App\Http\Requests\WorkspaceRequest;
 
-class WorkspaceController extends Controller
+class WorkspaceController extends BaseController
 {
 
     public function __construct()
     {
-        $this->data['sitetitle'] = 'Store Report';
+        $this->getWorkspace();
     }
 
     public function index()
     {
-        return view('workspace.index');
+        return view('workspace.index', $this->data);
     }
 
-
-    public function store(WorkspaceRequest $request)
+    public function store(Request $request)
     {
         try {
             $payload = [
@@ -32,27 +29,14 @@ class WorkspaceController extends Controller
                 'token'       => setting('trello_secret_key'),
             ];
             $apiUrl = 'https://api.trello.com/1/organizations';
-            $response = Http::post($apiUrl,$payload);
+            $response = Http::post($apiUrl, $payload);
             $data = json_decode($response->getBody()->getContents(), true);
             if (!blank($data)) {
-                $this->delete();
-                StoreReport::insert($data);
-                return redirect()->route('/');
+                return redirect()->route('workspace.index')->withSuccess('Workspace Create successfully!');
             }
         } catch (\Exception $exception) {
-            dd($exception);
+            return redirect(route('workspace.index'))->withError($exception->getMessage());
+            // dd($exception);
         }
-    }
-
-
-    protected function getStoreReport()
-    {
-        $reports = StoreReport::orderBy('purchase_quantity', 'desc')->get();
-        return $reports;
-    }
-
-    public function delete()
-    {
-        StoreReport::truncate();
     }
 }

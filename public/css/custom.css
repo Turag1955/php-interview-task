@@ -11,34 +11,35 @@ img {
 }
 
 .height-textarea {
-	min-height: 200px !important;
+    min-height: 200px !important;
 }
 
 .input-daterange .btn-outline-secondary {
-	border-color : #e4e6fc;
-	color: #495057;
+    border-color: #e4e6fc;
+    color: #495057;
 }
 
-button#date-search:hover, button#refresh:hover {
-	color: #000 !important;
-	background-color: #dbdfe3 !important;
+button#date-search:hover,
+button#refresh:hover {
+    color: #000 !important;
+    background-color: #dbdfe3 !important;
 }
 
 .order.card {
-	border: 1px dashed #beb6b6;
+    border: 1px dashed #beb6b6;
 }
 
 .order.card .card-body {
-	padding-bottom: 0;
+    padding-bottom: 0;
 }
 
 .order.card .card-footer {
-	padding: 0 25px 20px !important;
+    padding: 0 25px 20px !important;
 }
 
 
 .small-textarea-height {
-	min-height: 100px !important;
+    min-height: 100px !important;
 }
 
 .bg-maroon-light {
@@ -93,7 +94,7 @@ button#date-search:hover, button#refresh:hover {
     height: 120px;
     border-radius: 50%;
     -webkit-border-radius: 50%;
-    border:3px solid #d2d6de;
+    border: 3px solid #d2d6de;
     padding: 3px;
 }
 
@@ -110,8 +111,8 @@ button#date-search:hover, button#refresh:hover {
 }
 
 .single-profile {
-	width: 50%;
-	float: left;
+    width: 50%;
+    float: left;
 }
 
 .profile-picture {
@@ -122,7 +123,7 @@ button#date-search:hover, button#refresh:hover {
     margin: -35px -5px 0 30px;
     position: relative;
     z-index: 1;
-    border:3px solid #d2d6de;
+    border: 3px solid #d2d6de;
     padding: 3px;
     background: #fff;
 }
@@ -144,7 +145,7 @@ button#date-search:hover, button#refresh:hover {
     border-color: red !important;
 }
 
-.no-padding{
+.no-padding {
     padding: 0px !important;
     padding-top: 5px !important;
 
@@ -187,8 +188,8 @@ button#date-search:hover, button#refresh:hover {
 }
 
 .paymentheader {
-    font-size:16px;
-    color:#6777ef
+    font-size: 16px;
+    color: #6777ef
 }
 
 .report-print-button {
@@ -230,64 +231,83 @@ button#date-search:hover, button#refresh:hover {
 
 /* backened dashboard checkout button  starts*/
 
-.inputid{
-    height:40px !important;
-     width:200px !important;
+.inputid {
+    height: 40px !important;
+    width: 200px !important;
 }
-.inputbtn{
+
+.inputbtn {
     background-color: #3bb556;
     height: 40px;
     color: white;
     font-size: 20px;
 }
-.inputbtnclockin{
+
+.inputbtnclockin {
     background-color: #121313;
     height: 40px;
     color: white;
     font-size: 20px;
 }
-.inputbtnclockout{
-    background-color: #D30000;;
+
+.inputbtnclockout {
+    background-color: #D30000;
+    ;
     height: 40px;
     color: white;
     font-size: 20px;
 }
-.clock-span{
+
+.clock-span {
     font-size: 18px;
     font-weight: bold;
 }
-.clock-span i{
+
+.clock-span i {
     font-size: 18px;
 }
+
 .hidecheck {
     display: block;
     margin-right: 10px !important;
     margin-left: 9px !important;
-  }
+}
 
- @media (max-width: 595px) {
+@media (max-width: 595px) {
     .hidecheck {
-      /* display: none; */
-      margin-right: 5px !important;
-      margin-left: 8px !important;
-      margin-bottom: 2px;
+        /* display: none; */
+        margin-right: 5px !important;
+        margin-left: 8px !important;
+        margin-bottom: 2px;
     }
-    .inputbtn{
+
+    .inputbtn {
         height: 30px;
         font-size: 15px;
     }
-    .inputid{
-        height:30px !important;
-        width:130px !important;
+
+    .inputid {
+        height: 30px !important;
+        width: 130px !important;
     }
-  }
+}
 
-  /* backened dashboard checkout button  stops*/
+/* backened dashboard checkout button  stops*/
 
 
 
-.gross-total{
+.gross-total {
     text-align: end;
     font-weight: 800;
     font-size: 16px;
 }
+
+.workspace-name {
+    color: #333 !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    font-style: normal;
+}
+
+
+

@@ -18,8 +18,5 @@ class StoreReport extends Model
         'created_at',
     ];
 
-    public function setCreatedAtAttribute($value)
-    {
-        $this->attributes['created_at'] = date('d-m-y H:i:s',strtotime($value));
-    }
+
 }
