@@ -1,7 +1,7 @@
 @extends('workspace.index')
 
 @section('workspace.breadcrumbs')
-{{-- {{ Breadcrumbs::render('editor-setting') }} --}}
+{{ Breadcrumbs::render('board') }}
 @endsection
 
 @section('workspace.layout')
@@ -17,7 +17,7 @@
                     @if(!blank($boards))
                     @foreach($boards as $board)
                     <div class="col-md-4">
-                        <a href="">
+                        <a href="{{ route('list.index',$board->id) }}">
                             <div class="card bg-dark text-white">
                                 <img class="card-img" src="{{ asset('images/trello.jpg') }}" alt="Card image">
                                 <div class="card-img-overlay">
@@ -27,10 +27,12 @@
                             </div>
                         </a>
                         <div class="d-flex justify-content-center my-1">
-                            <button class="badge badge-primary mr-1 edit-board" data-toggle="tooltip" data-placement="top"
-                                title="" data-original-title="Edit" value="{{ $board->id }}">{{ __('Update') }}</button>
-                            <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" title=""
-                                data-original-title="Delete" value="{{ $board->id }}">{{ __('Delete') }}</button>
+                            <button class="badge badge-primary mr-1 edit-board" data-toggle="tooltip"
+                                data-placement="top" title="" data-original-title="Update"
+                                value="{{ $board->id }}">{{ __('Update') }}</button>
+                            <button class="badge badge-danger delete-board" data-toggle="tooltip" data-placement="top"
+                                title="" data-original-title="Delete"
+                                value="{{ $board->id }}">{{ __('Delete') }}</button>
                         </div>
                         <hr>
                     </div>
@@ -91,8 +93,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>{{ __('Board Title') }}</label><span class="text-danger">*</span>
-                        <input type="text" name="name" id="board_name" class="form-control" value=""
-                            required>
+                        <input type="text" name="name" id="board_name" class="form-control" value="" required>
                     </div>
                     <div class="form-group">
                         <label>{{ __('Description') }}</label>
@@ -109,70 +110,36 @@
         </div>
     </div>
 </div>
+@include('workspace.workspace-modal')
+
 @endsection
 
 @section('scripts')
 <script>
     $(document).ready(function () {
+        
+        $(".btn-workspace").click(function () {
+            $("#workspace").modal('show');
+        });
+
         $(".create-board").click(function () {
             $("#exampleModal").modal('show');
         });
 
         $(".delete-board").click(function () {
-            if(confirm('Are Your sure?')){
+            if (confirm('Are Your sure?')) {
                 var board_id = $(this).val();
-                var idOrganization = "{{ isset($idOrganization) ? $idOrganization : '' }}";
                 $.ajax({
-                type: "post",
-                url: "{{ route('board.delete') }}",
-                data: {
-                         board_id : board_id,
-                         idOrganization : idOrganization,
+                    type: "post",
+                    url: "{{ route('board.delete') }}",
+                    data: {
+                        board_id: board_id,
                     },
-                cache: false,
-                success: function (data) {
-                    if (data == 'Success') {
-                        toastr["success"]("Success")
-                        toastr.options = {
-                            "closeButton": true,
-                            "debug": false,
-                            "newestOnTop": false,
-                            "progressBar": false,
-                            "positionClass": "toast-top-right",
-                            "preventDuplicates": false,
-                            "onclick": null,
-                            "showDuration": "500",
-                            "hideDuration": "500",
-                            "timeOut": "5000",
-                            "extendedTimeOut": "1000",
-                            "showEasing": "swing",
-                            "hideEasing": "linear",
-                            "showMethod": "fadeIn",
-                            "hideMethod": "fadeOut"
-                        }
-                    } else {
-                        toastr["error"]("Error")
-                        toastr.options = {
-                            "closeButton": true,
-                            "debug": false,
-                            "newestOnTop": false,
-                            "progressBar": false,
-                            "positionClass": "toast-top-right",
-                            "preventDuplicates": false,
-                            "onclick": null,
-                            "showDuration": "500",
-                            "hideDuration": "500",
-                            "timeOut": "5000",
-                            "extendedTimeOut": "1000",
-                            "showEasing": "swing",
-                            "hideEasing": "linear",
-                            "showMethod": "fadeIn",
-                            "hideMethod": "fadeOut"
-                        }
+                    cache: false,
+                    success: function () {
+                        location.reload();
                     }
-                    location.reload();
-                }
-            });
+                });
             }
         });
 
@@ -181,7 +148,9 @@
             $.ajax({
                 type: "post",
                 url: "{{ route('board.edit') }}",
-                data: {board_id : board_id},
+                data: {
+                    board_id: board_id
+                },
                 cache: false,
                 success: function (data) {
                     $('#board_name').val(data.name);

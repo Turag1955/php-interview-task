@@ -6,15 +6,9 @@ use App\Models\StoreReport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\DB;
 
 class StoreReportController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->data['sitetitle'] = 'Store Report';
-    }
 
     public function index()
     {
@@ -34,7 +28,7 @@ class StoreReportController extends Controller
                 return redirect()->route('/');
             }
         } catch (\Exception $exception) {
-            dd($exception);
+            redirect()->route('/')->withErrors($exception->getMessage());
         }
     }
 

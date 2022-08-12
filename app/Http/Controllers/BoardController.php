@@ -10,22 +10,23 @@ use App\Http\Controllers\BaseController;
 class BoardController extends BaseController
 {
 
-    public function __construct()
-    {
-        $this->getWorkspace();
-    }
-
     public function index($id)
     {
-        $payload = [
-            'key'         => setting('trello_apikey'),
-            'token'       => setting('trello_secret_key'),
-        ];
-        $apiUrl = "https://api.trello.com/1/organizations/{$id}/boards";
-        $response = Http::get($apiUrl, $payload);
-        $this->data['boards'] = RequestHandler::get_data($response);
-        $this->data['idOrganization'] = $id;
-        return view('workspace.board', $this->data);
+
+        try {
+            $payload = [
+                'key'         => setting('trello_apikey'),
+                'token'       => setting('trello_secret_key'),
+            ];
+            $apiUrl = "https://api.trello.com/1/organizations/{$id}/boards";
+            $response = Http::get($apiUrl, $payload);
+            $this->data['boards'] = RequestHandler::get_data($response);
+            $this->data['idOrganization'] = $id;
+            $this->getWorkspace();
+            return view('workspace.board', $this->data);
+        } catch (\Exception $exception) {
+            return redirect(route('workspace.index'))->withError($exception->getMessage());
+        }
     }
 
 
@@ -49,21 +50,25 @@ class BoardController extends BaseController
                 return redirect()->route('board.index', $idOrganization)->withSuccess('Board Create Unsuccessfully!');
             }
         } catch (\Exception $exception) {
-            return redirect(route('board.index', $idOrganization))->withError($exception->getMessage());
+            return redirect(route('workspace.index'))->withError($exception->getMessage());
         }
     }
 
     public function edit(Request $request)
     {
-        $board_id = $request->get('board_id');
-        $payload = [
-            'key'         => setting('trello_apikey'),
-            'token'       => setting('trello_secret_key'),
-        ];
-        $apiUrl = "https://api.trello.com/1/boards/{$board_id}";
-        $response = Http::get($apiUrl, $payload);
-        $data = json_decode($response->getBody()->getContents(), true);
-        return response($data);
+        try {
+            $board_id = $request->get('board_id');
+            $payload = [
+                'key'         => setting('trello_apikey'),
+                'token'       => setting('trello_secret_key'),
+            ];
+            $apiUrl = "https://api.trello.com/1/boards/{$board_id}";
+            $response = Http::get($apiUrl, $payload);
+            $data = json_decode($response->getBody()->getContents(), true);
+            return response($data);
+        } catch (\Exception $exception) {
+            return redirect(route('workspace.index'))->withError($exception->getMessage());
+        }
     }
 
     public function update(Request $request)
@@ -87,7 +92,7 @@ class BoardController extends BaseController
                 return redirect()->route('board.index', $idOrganization)->withSuccess('Board Update Unsuccessfully!');
             }
         } catch (\Exception $exception) {
-            return redirect(route('board.index', $idOrganization))->withError($exception->getMessage());
+            return redirect(route('workspace.index'))->withError($exception->getMessage());
         }
     }
 
@@ -96,7 +101,6 @@ class BoardController extends BaseController
         try {
             $board_id = $request->get('board_id');
             $payload = [
-                'idOrganization' => $request->get('idOrganization'),
                 'key'            => setting('trello_apikey'),
                 'token'          => setting('trello_secret_key'),
             ];
@@ -109,6 +113,7 @@ class BoardController extends BaseController
                 echo 'Error';
             }
         } catch (\Exception $exception) {
+            return 'error';
         }
     }
 }

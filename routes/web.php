@@ -20,6 +20,15 @@ Route::group(['prefix' => 'board', 'as' => 'board.'], function () {
     Route::post('edit', 'BoardController@edit')->name('edit');
     Route::put('update', 'BoardController@update')->name('update');
     Route::post('delete', 'BoardController@delete')->name('delete');
+    Route::get('list/{id}', 'BoardController@list')->name('list');
+});
+
+Route::group(['prefix' => 'list', 'as' => 'list.'], function () {
+    Route::get('/{id}', 'ListController@index')->name('index');
+    Route::post('store', 'ListController@store')->name('store');
+    Route::post('card', 'ListController@cardList')->name('card');
+    Route::post('card-store', 'ListController@cardStore')->name('card.store');
+    Route::post('card-show', 'ListController@cardShow')->name('card.show');
 });
 
 Route::group(['prefix' => 'trello', 'as' => 'trello.'], function () {

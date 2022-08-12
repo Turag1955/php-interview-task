@@ -12,8 +12,8 @@ class BaseController extends Controller
 
     public function getWorkspace()
     {
-
-        try{
+      
+        try {
             $payload = [
                 'key'         => setting('trello_apikey'),
                 'token'       => setting('trello_secret_key'),
@@ -22,9 +22,8 @@ class BaseController extends Controller
             $response = Http::get($apiUrl, $payload);
             $this->data['workspaces'] = RequestHandler::get_data($response);
             return $this->data;
-        }catch(\Exception $exception){
+        } catch (\Exception $exception) {
             return $this->data['workspaces'] = null;
         }
-       
     }
 }

@@ -30,7 +30,7 @@ class SettingController extends Controller
     private function trelloValidateArray()
     {
         return [
-            'trello_apikey'  => 'nullable|string',
+            'trello_apikey'     => 'nullable|string',
             'trello_secret_key' => 'nullable|string',
         ];
     }

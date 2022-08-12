@@ -10,14 +10,16 @@ use App\Http\Requests\WorkspaceRequest;
 class WorkspaceController extends BaseController
 {
 
-    public function __construct()
-    {
-        $this->getWorkspace();
-    }
+
 
     public function index()
     {
-        return view('workspace.index', $this->data);
+        $this->getWorkspace();
+        if ($this->data['workspaces'] && !blank($this->data['workspaces'])) {
+            return redirect()->route('board.index', $this->data['workspaces'][0]->id);
+        } else {
+            return view('workspace.index', $this->data);
+        }
     }
 
     public function store(Request $request)
@@ -31,12 +33,13 @@ class WorkspaceController extends BaseController
             $apiUrl = 'https://api.trello.com/1/organizations';
             $response = Http::post($apiUrl, $payload);
             $data = json_decode($response->getBody()->getContents(), true);
-            if (!blank($data)) {
-                return redirect()->route('workspace.index')->withSuccess('Workspace Create successfully!');
+            if ($data && !blank($data)) {
+                return redirect()->route('workspace.index')->withSuccess('Create successfully!');
+            } else {
+                return redirect(route('workspace.index'))->withError('Create Unsuccessfully!');
             }
         } catch (\Exception $exception) {
             return redirect(route('workspace.index'))->withError($exception->getMessage());
-            // dd($exception);
         }
     }
 }

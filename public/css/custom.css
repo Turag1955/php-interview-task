@@ -309,5 +309,24 @@ button#refresh:hover {
     font-style: normal;
 }
 
-
-
+.list-style{
+    background: #EBECF0;
+    /* cursor: pointer; */
+}
+.list-title-text{
+    color: #172b4d;
+    font-weight: 600;
+}
+.list-title-icon{
+    float: right;
+}
+.p-card{
+    padding: 10px 0px;
+}
+.add-card{
+    color: #5e6c84;
+    text-decoration: none;
+}
+.list-group-item{
+    cursor: pointer;
+}

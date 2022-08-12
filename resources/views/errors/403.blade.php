@@ -1,7 +1,6 @@
-@extends('admin.layouts.master')
+@extends('layouts.master')
 
 @section('main-content')
-
     <section class="section">
         <div class="section-body">
             <div class="row">

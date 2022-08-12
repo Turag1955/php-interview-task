@@ -11,7 +11,7 @@
             </li>
             <li class="">
                 <a class="nav-link " href="{{ route('workspace.index') }}">
-                    <i class="fas fa-chart-pie"></i> <span>{{ __('Create Workspace') }}</span>
+                    <i class="fa fa-bars"></i> <span>{{ __('Trello Workspace') }}</span>
                 </a>
             </li>
             <li class="">
